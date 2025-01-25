@@ -1,5 +1,6 @@
 package kezul.fighting.application.user.service;
 
+import kezul.fighting.application.user.dto.response.UserSignUpResponseDto;
 import kezul.fighting.domain.user.enums.UserRole;
 import kezul.fighting.domain.user.model.User;
 import kezul.fighting.domain.user.repository.UserRepository;
@@ -15,7 +16,14 @@ public class AuthServiceImpl implements AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void signUp(String loginId, String password, String nickname, String email) {
+    public UserSignUpResponseDto signUp(String loginId, String password, String nickname, String email, UserRole role) {
+
+
+        /**
+         * todo
+         * 1. 예외 처리
+         */
+
         // 1. 로그인 아이디 중복 검사
         if (userRepository.existsUserByLoginId(loginId)) {
             // 에러 처리;
@@ -33,7 +41,8 @@ public class AuthServiceImpl implements AuthService {
 
         String encodedPassword = bCryptPasswordEncoder.encode(password);
 
-        User user = User.of(loginId, encodedPassword, email, nickname);
-        userRepository.save(user);
+        User user = User.of(loginId, encodedPassword, email, nickname, role);
+        User savedUser = userRepository.save(user);
+        return UserSignUpResponseDto.from(savedUser);
     }
 }
