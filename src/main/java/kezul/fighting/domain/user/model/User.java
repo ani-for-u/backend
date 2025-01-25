@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Entity(name = "users")
+@Entity(name = "community_users")
 @Getter
 @NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id")
     private UUID id;
 
     @Column(nullable = false, unique = true)
@@ -35,12 +36,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public static User of(String loginId, String password, String email, String nickname) {
+    public static User of(String loginId, String password, String email, String nickname, UserRole role) {
         User user = new User();
         user.loginId = loginId;
         user.password = password;
         user.email = email;
         user.nickname = nickname;
+        user.role = role;
         return user;
     }
 }
