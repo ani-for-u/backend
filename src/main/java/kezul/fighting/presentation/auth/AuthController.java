@@ -17,4 +17,5 @@ public class AuthController {
     public void signUp(@RequestBody UserSignUpDto userSignUpDto) {
         authService.signUp(userSignUpDto.getLoginId(), userSignUpDto.getPassword(), userSignUpDto.getNickname(), userSignUpDto.getEmail());
     }
+
 }
