@@ -12,11 +12,31 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Creates a BCryptPasswordEncoder bean for password hashing and verification.
+     *
+     * @return A BCryptPasswordEncoder instance configured with default strength
+     * @see BCryptPasswordEncoder
+     */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures the security filter chain for HTTP requests with a stateless, permissive security policy.
+     *
+     * @param http the HttpSecurity configuration to customize
+     * @return a configured SecurityFilterChain with disabled authentication mechanisms
+     * @throws Exception if an error occurs during security configuration
+     *
+     * This method:
+     * - Disables CSRF protection
+     * - Disables form login
+     * - Disables HTTP basic authentication
+     * - Permits all requests to all endpoints
+     * - Sets a stateless session management policy
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
