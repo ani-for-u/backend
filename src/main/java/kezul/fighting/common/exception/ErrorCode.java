@@ -1,10 +1,11 @@
 package kezul.fighting.common.exception;
 
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 
 public interface ErrorCode {
 
     HttpStatus getStatus();
     String getCode();
-    String getMessage();
+    String getMessage(MessageSource messageSource);
 }

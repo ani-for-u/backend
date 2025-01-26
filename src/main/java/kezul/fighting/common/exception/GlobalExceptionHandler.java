@@ -3,6 +3,7 @@ package kezul.fighting.common.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -12,6 +13,7 @@ public class GlobalExceptionHandler {
 
     private final HttpServletResponse response;
     private final HttpServletRequest request;
+    private final MessageSource messageSource;
 
     @ExceptionHandler(FighterException.class)
     public void handleFighterException(FighterException e) {
@@ -20,6 +22,6 @@ public class GlobalExceptionHandler {
 
     private void setResponse(ErrorCode errorCode) {
         response.setStatus(errorCode.getStatus().value());
-        request.setAttribute("message", errorCode.getMessage());
+        request.setAttribute("message", errorCode.getMessage(messageSource));
     }
 }
