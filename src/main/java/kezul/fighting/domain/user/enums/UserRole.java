@@ -1,5 +1,5 @@
 package kezul.fighting.domain.user.enums;
 
 public enum UserRole {
-    COMMON, MASTER, BOARD_MANAGER
+    ROLE_COMMON, ROLE_MASTER, ROLE_BOARD_MANAGER
 }

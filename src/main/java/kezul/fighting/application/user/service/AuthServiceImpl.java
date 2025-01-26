@@ -1,6 +1,9 @@
 package kezul.fighting.application.user.service;
 
 import kezul.fighting.application.user.dto.response.UserSignUpResponseDto;
+import kezul.fighting.application.user.exception.EmailAlreadyExistsException;
+import kezul.fighting.application.user.exception.LoginIdAlreadyExistsException;
+import kezul.fighting.application.user.exception.NicknameAlreadyExistsException;
 import kezul.fighting.domain.user.enums.UserRole;
 import kezul.fighting.domain.user.model.User;
 import kezul.fighting.domain.user.repository.UserRepository;
@@ -18,25 +21,20 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserSignUpResponseDto signUp(String loginId, String password, String nickname, String email, UserRole role) {
 
-
-        /**
-         * todo
-         * 1. 예외 처리
-         */
-
         // 1. 로그인 아이디 중복 검사
         if (userRepository.existsUserByLoginId(loginId)) {
-            // 에러 처리;
+            throw new LoginIdAlreadyExistsException();
         }
 
         // 2. nickname 중복 검사
         if (userRepository.existsUserByNickname(nickname)) {
-            // 에러 처리
+            throw new NicknameAlreadyExistsException();
         }
 
         // 3. email 중복 검사
         if (userRepository.existsUserByEmail(email)) {
             // 에러 처리
+            throw new EmailAlreadyExistsException();
         }
 
         String encodedPassword = bCryptPasswordEncoder.encode(password);
