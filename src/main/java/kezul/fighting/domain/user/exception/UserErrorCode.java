@@ -9,9 +9,11 @@ import java.util.Locale;
 
 @RequiredArgsConstructor
 public enum UserErrorCode implements ErrorCode {
-    EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "user.email-already-exists"),
-    NICKNAME_ALREADY_EXISTS(HttpStatus.CONFLICT, "user.nickname-already-exists"),
-    LOGINID_ALREADY_EXISTS(HttpStatus.CONFLICT, "user.loginid-already-exists")
+    EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "auth.email.already-exists"),
+    NICKNAME_ALREADY_EXISTS(HttpStatus.CONFLICT, "auth.nickname.already-exists"),
+    LOGINID_ALREADY_EXISTS(HttpStatus.CONFLICT, "auth.loginid.already-exists"),
+    LOGINID_NOT_EXISTS(HttpStatus.UNAUTHORIZED, "auth.loginid.not-exists"),
+    PASSWORD_MISMATCH(HttpStatus.UNAUTHORIZED, "auth.password.mismatch")
     ;
 
     private final HttpStatus httpStatus;
