@@ -12,7 +12,7 @@ public enum UserErrorCode implements ErrorCode {
     EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "auth.email.already-exists"),
     NICKNAME_ALREADY_EXISTS(HttpStatus.CONFLICT, "auth.nickname.already-exists"),
     LOGINID_ALREADY_EXISTS(HttpStatus.CONFLICT, "auth.loginid.already-exists"),
-    LOGINID_NOT_EXISTS(HttpStatus.UNAUTHORIZED, "auth.loginid.not-exists"),
+    LOGINID_NOT_EXISTS(HttpStatus.BAD_REQUEST, "auth.loginid.not-exists"),
     PASSWORD_MISMATCH(HttpStatus.UNAUTHORIZED, "auth.password.mismatch")
     ;
 
