@@ -2,10 +2,12 @@ package kezul.fighting.infrastructure.security;
 
 import kezul.fighting.domain.user.model.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -17,10 +19,9 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(() -> user.getRole().name());
-        return collection;
+        return Collections.singleton(
+                new SimpleGrantedAuthority(user.getRole().name())
+        );
     }
 
     @Override
