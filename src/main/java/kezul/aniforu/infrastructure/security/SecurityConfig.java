@@ -1,6 +1,9 @@
 package kezul.aniforu.infrastructure.security;
 
+import kezul.aniforu.infrastructure.security.jwt.JwtFilter;
+import kezul.aniforu.infrastructure.security.jwt.JwtUtils;
 import kezul.aniforu.infrastructure.security.jwt.LoginFilter;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,10 +20,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JwtUtils jwtUtils;
+    private final MessageSource messageSource;
+    private final JwtFilter jwtFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtils jwtUtils, MessageSource messageSource, JwtFilter jwtFilter, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.authenticationConfiguration = authenticationConfiguration;
+        this.jwtUtils = jwtUtils;
+        this.messageSource = messageSource;
+        this.jwtFilter = jwtFilter;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
     }
+
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -44,7 +56,10 @@ public class SecurityConfig {
 
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAt(new LoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint)
+                )
+                .addFilterAt(new LoginFilter(authenticationManager(), jwtUtils, messageSource), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, LoginFilter.class)
         ;
 
         return http.build();

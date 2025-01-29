@@ -15,10 +15,11 @@ public class GlobalExceptionHandler {
     private final HttpServletRequest request;
     private final MessageSource messageSource;
 
-    @ExceptionHandler(FighterException.class)
-    public void handleFighterException(FighterException e) {
+    @ExceptionHandler(AniforuException.class)
+    public void handleAniforuException(AniforuException e) {
         setResponse(e.getErrorCode());
     }
+
 
     private void setResponse(ErrorCode errorCode) {
         response.setStatus(errorCode.getStatus().value());

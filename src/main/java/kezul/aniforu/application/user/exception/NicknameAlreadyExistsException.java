@@ -1,10 +1,10 @@
 package kezul.aniforu.application.user.exception;
 
-import kezul.aniforu.common.exception.FighterException;
-import kezul.aniforu.domain.user.exception.UserErrorCode;
+import kezul.aniforu.common.exception.AniforuException;
+import kezul.aniforu.domain.user.exception.AuthErrorCode;
 
-public class NicknameAlreadyExistsException extends FighterException {
+public class NicknameAlreadyExistsException extends AniforuException {
     public NicknameAlreadyExistsException() {
-        super(UserErrorCode.NICKNAME_ALREADY_EXISTS);
+        super(AuthErrorCode.NICKNAME_ALREADY_EXISTS);
     }
 }
