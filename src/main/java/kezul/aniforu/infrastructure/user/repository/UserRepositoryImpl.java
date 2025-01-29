@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -36,6 +37,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findByLoginId(String loginId) {
         return userJpaRepository.findByLoginId(loginId);
+    }
+
+    @Override
+    public Optional<User> findById(UUID userId) {
+        return userJpaRepository.findById(userId);
     }
 
 

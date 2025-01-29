@@ -4,6 +4,7 @@ package kezul.aniforu.domain.user.repository;
 import kezul.aniforu.domain.user.model.User;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserRepository {
 
@@ -14,4 +15,5 @@ public interface UserRepository {
     User save(User user);
 
     Optional<User> findByLoginId(String loginId);
+    Optional<User> findById(UUID userId);
 }
