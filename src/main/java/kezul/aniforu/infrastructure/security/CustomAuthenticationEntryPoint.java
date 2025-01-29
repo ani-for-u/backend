@@ -14,12 +14,15 @@ import java.io.IOException;
 
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    private final ObjectMapper objectMapper= new ObjectMapper();
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.setContentType("aplication/json");
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         ResponseDto<Void> responseDto = ResponseDto.error(authException.getMessage());
-        response.getWriter().write(new ObjectMapper().writeValueAsString(responseDto));
+        response.getWriter().write(objectMapper.writeValueAsString(responseDto));
     }
 }
